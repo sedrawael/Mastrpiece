@@ -1,0 +1,119 @@
+body {
+    font-family: 'Playfair Display', serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url('../images/slider-bg2.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    text-align: right;
+    position: relative; /* لجعل الطبقة الشفافة تعمل */
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* طبقة سوداء شبه شفافة (0.5 = 50% opacity) */
+    z-index: 1; /* تأكد من أن الطبقة فوق الخلفية */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative; /* لجعل النموذج يظهر فوق الطبقة الشفافة */
+    z-index: 2; /* تأكد من أن النموذج فوق الطبقة */
+}
+
+.form-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.6); /* خلفية شفافة للنموذج */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative; /* تأكد من أن النموذج فوق الطبقة */
+    z-index: 3; /* تأكد من أن النموذج فوق الطبقة */
+}
+
+.form-container h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container input:focus {
+    border-color: #f3c024;
+    box-shadow: 0 0 8px rgba(243, 192, 36, 0.5);
+    outline: none;
+}
+
+.form-container input::placeholder {
+    color: #999;
+    font-family: 'Playfair Display', serif;
+}
+
+.form-container button {
+    background-color: #f3c024;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Oswald', sans-serif;
+}
+
+.form-container button:hover {
+    background-color: #e89f10;
+    transform: scale(1.05);
+}
+
+.form-container .signup {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.form-container .signup a {
+    color: #f3c024;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-container .signup a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    display: block;
+    text-align: left;
+}
