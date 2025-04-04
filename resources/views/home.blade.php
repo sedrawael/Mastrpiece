@@ -38,13 +38,28 @@
                         <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
                 </ul>
-            
+                
+                <!-- تسجيل الدخول / تسجيل الخروج -->
                 <div class="login-icon">
-                    <a href="{{ url('/login') }}" class="nav-link">
-                   
-                        <i class="fas fa-sign-in-alt"></i>
-                    </a>
+                    @guest
+                        <!-- عرض أيقونة تسجيل الدخول فقط للضيوف (غير المسجلين) -->
+                        <a href="{{ url('/login') }}" class="nav-link">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                    @else
+                        <!-- عرض أيقونة تسجيل الخروج فقط للمستخدمين المسجلين -->
+                        <a href="{{ route('logout') }}" class="nav-link"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+
+                        <!-- فورم تسجيل الخروج (مخفي) -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    @endguest
                 </div>
+
             </div>
         </div>
     </nav>
@@ -257,4 +272,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </body>
 </html>
-

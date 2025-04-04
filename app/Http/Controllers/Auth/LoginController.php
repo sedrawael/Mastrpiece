@@ -1,40 +1,28 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request; // تأكدي من استيراده
+use Illuminate\Support\Facades\Auth; // تأكدي من إضافته
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
+    use AuthenticatesUsers;
+
+    protected $redirectTo = '/home';
+
+    public function __construct()
     {
-        return view('login');  // عرض صفحة تسجيل الدخول
+        $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    protected function authenticated(Request $request, $user)
     {
-        // التحقق من صحة المدخلات
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        // تخزين بيانات تسجيل الدخول
-        $credentials = $request->only('email', 'password');
-
-        // محاولة تسجيل الدخول
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            // إعادة توجيه المستخدم بناءً على دوره
-            return $user->role === 'admin'
-                ? redirect()->intended('/content')
-                : redirect()->intended('/home');
+        if ($user->role == 'user') {
+            return redirect()->route('home');
         }
-
-        // في حال فشل تسجيل الدخول
-        return back()->with('error', 'بيانات الدخول غير صحيحة');
+        return redirect()->route('content');
+       
     }
 }
