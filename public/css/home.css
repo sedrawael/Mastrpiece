@@ -693,3 +693,20 @@ main {
         text-align: center;
     }
 }
+
+
+    .btn-profile {
+        display: inline-block;
+        padding: 12px 20px;
+        background-color: #5A3E36;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .btn-profile:hover {
+        background-color: #3f2b25;
+    }
+

@@ -3,45 +3,29 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
-
-// الصفحة الرئيسية
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// مسار التسجيل
 Route::get('/register', function () {
     return view('SignUp');
 })->name('register');
 Auth::routes();
-Route::post('/register', [RegisterController::class, 'register']);
 
-// مسار تسجيل الدخول باستخدام LoginController
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-// مسار لوحة التحكم (Dashboard) للمسؤولين فقط
 Route::get('/content', function () {
     return view('content');
-})->middleware('auth')->name('content'); // ✅ أضفنا اسمًا للمسار
+})->middleware('auth')->name('content'); 
 
-// مصادقة Laravel الافتراضية
-Auth::routes();
-
-// إعادة توجيه المستخدم بعد تسجيل الدخول حسب دوره
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// مسار تسجيل الخروج
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/'); // توجيه المستخدم إلى الصفحة الرئيسية بعد تسجيل الخروج
+    return redirect()->route('home');
 })->name('logout');
-
-
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect()->route('home'); // ✅ يرجع المستخدم إلى الصفحة الرئيسية بعد تسجيل الخروج
-})->name('logout');
-
 
 Route::get('/book-now', function () {
     if (!auth()->check()) {
@@ -49,3 +33,11 @@ Route::get('/book-now', function () {
     }
     return view('book now');
 })->name('book.now');
+
+// هنا تعريف مجموعة من المسارات الخاصة بالملف الشخصي
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show'); // عرض الملف الشخصي
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit'); // تعديل الملف الشخصي
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update'); // تحديث الملف الشخصي
+    Route::delete('/profile/picture/delete', [ProfileController::class, 'deletePicture'])->name('profile.picture.delete'); // حذف الصورة الشخصية
+});

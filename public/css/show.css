@@ -1,0 +1,140 @@
+/* public/css/profile-show.css */
+
+/* الخلفية العامة */
+.profile-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+/* تحسينات البطاقة الرئيسية */
+.profile-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+}
+
+/* هيدر البطاقة */
+.card-header.bg-primary {
+    background-color: #5A3E36 !important;
+    padding: 1.25rem;
+    border-bottom: none;
+}
+
+.card-header h4 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* صورة الملف الشخصي */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #f3c024;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* معلومات الملف الشخصي */
+.profile-info h5 {
+    color: #5A3E36;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-info h5 i {
+    color: #f3c024;
+    font-size: 1rem;
+}
+
+.profile-info p.text-muted {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border-left: 3px solid #f3c024;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.profile-info p.text-muted:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+/* أزرار التحكم */
+.profile-actions .btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.profile-actions .btn-primary {
+    background-color: #5A3E36;
+    border-color: #5A3E36;
+}
+
+.profile-actions .btn-primary:hover {
+    background-color: #4a342e;
+    border-color: #4a342e;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(90, 62, 54, 0.3);
+}
+
+.profile-actions .btn-outline-secondary {
+    color: #5A3E36;
+    border-color: #5A3E36;
+}
+
+.profile-actions .btn-outline-secondary:hover {
+    background-color: #5A3E36;
+    color: white;
+}
+
+/* التصميم المتجاوب */
+@media (max-width: 768px) {
+    .profile-page {
+        padding: 20px 0;
+    }
+    
+    .profile-info h5 {
+        font-size: 1rem;
+    }
+    
+    .profile-info p.text-muted {
+        padding: 0.5rem;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .profile-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
