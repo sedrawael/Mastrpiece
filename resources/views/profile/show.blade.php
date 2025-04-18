@@ -1,6 +1,7 @@
 @extends('layouts.app')
+<link href="{{ asset('css/show.css') }}" rel="stylesheet">
 
-@section('title', 'الملف الشخصي')
+@section('title', 'Profile')
 
 @section('content')
 <style>
@@ -14,7 +15,7 @@
     min-height: 100vh;
     width: 100%;
     position: relative;
-    text-align: right;
+    text-align: left;
 }
 
     .profile-container::before {
@@ -155,40 +156,40 @@
     <div class="profile-card">
         <div class="profile-header">
             <img src="{{ Auth::user()->profile_picture ? Storage::url(Auth::user()->profile_picture) : asset('images/default-avatar.png') }}" 
-                 alt="صورة الملف الشخصي" 
+                 alt="Profile Picture" 
                  class="profile-avatar">
             <h2>{{ Auth::user()->name }}</h2>
-            <p>عضو منذ {{ Auth::user()->created_at->diffForHumans() }}</p>
+            <p>Member since {{ Auth::user()->created_at->diffForHumans() }}</p>
         </div>
 
         <div class="profile-info">
             <div class="info-group">
-                <label>البريد الإلكتروني</label>
+                <label>Email</label>
                 <div class="info-value">{{ Auth::user()->email }}</div>
             </div>
             <div class="info-group">
-                <label>رقم الهاتف</label>
-                <div class="info-value">{{ Auth::user()->phone ?? 'غير محدد' }}</div>
+                <label>Phone Number</label>
+                <div class="info-value">{{ Auth::user()->phone ?? 'Not specified' }}</div>
             </div>
             <div class="info-group">
-                <label>تاريخ التسجيل</label>
+                <label>Registration Date</label>
                 <div class="info-value">{{ Auth::user()->created_at->format('Y/m/d') }}</div>
             </div>
             <div class="info-group">
-                <label>آخر تحديث</label>
+                <label>Last Updated</label>
                 <div class="info-value">{{ Auth::user()->updated_at->diffForHumans() }}</div>
             </div>
         </div>
 
         <div class="profile-actions">
             <a href="{{ route('profile.edit') }}" class="btn-edit">
-                <i class="fas fa-edit"></i> تعديل الملف الشخصي
+                <i class="fas fa-edit"></i> Edit Profile
             </a>
-            {{-- 
+            
             <a href="{{ route('password.change') }}" class="btn-change-password">
-                <i class="fas fa-lock"></i> تغيير كلمة المرور
+                <i class="fas fa-lock"></i> Change Password
             </a> 
-            --}}
+           
         </div>
     </div>
 </div>

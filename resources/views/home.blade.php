@@ -20,9 +20,7 @@
             <a href="{{ url('/') }}" class="navbar-logo">
                 <img src="{{ asset('images/9dfe2123-53e7-4310-a838-eb94ba255eb7-removebg-preview.png') }}" alt="Snap Aqaba Logo" width="150">
             </a>
-            <button class="navbar-toggler" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
+       
             <div class="navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item">

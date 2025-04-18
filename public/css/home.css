@@ -694,7 +694,17 @@ main {
     }
 }
 
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust this value to your preference */
+}
 
+.auth-links .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
     .btn-profile {
         display: inline-block;
         padding: 12px 20px;

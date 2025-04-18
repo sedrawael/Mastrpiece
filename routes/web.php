@@ -34,10 +34,24 @@ Route::get('/book-now', function () {
     return view('book now');
 })->name('book.now');
 
-// هنا تعريف مجموعة من المسارات الخاصة بالملف الشخصي
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show'); // عرض الملف الشخصي
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit'); // تعديل الملف الشخصي
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update'); // تحديث الملف الشخصي
-    Route::delete('/profile/picture/delete', [ProfileController::class, 'deletePicture'])->name('profile.picture.delete'); // حذف الصورة الشخصية
-});
+Route::middleware('auth')->group(function () {
+    // Profile Routes
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/picture', [ProfileController::class, 'deletePicture'])->name('profile.picture.delete');
+
+
+
+
+    Route::middleware('auth')->group(function () {
+    Route::get('/password/change', [ProfileController::class, 'showChangePasswordForm'])
+    ->name('password.change');
+    
+Route::post('/password/change', [ProfileController::class, 'changePassword'])
+    ->name('password.update');
+
+
+    Route::get('/password/change', [ProfileController::class, 'showChangePasswordForm'])
+     ->name('password.change');
+});});
