@@ -1,6 +1,11 @@
 <?php
+
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PhotographersController;
+
+
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
@@ -34,24 +39,18 @@ Route::get('/book-now', function () {
     return view('book now');
 })->name('book.now');
 
+// مسارات الـ Profile
 Route::middleware('auth')->group(function () {
-    // Profile Routes
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/picture', [ProfileController::class, 'deletePicture'])->name('profile.picture.delete');
 
+    // مسارات تغيير كلمة السر
+    Route::get('/password/change', [ProfileController::class, 'showChangePasswordForm'])->name('password.change');
+    Route::post('/password/change', [ProfileController::class, 'changePassword'])->name('password.update');
+});
 
+// مسارات المصورين
 
-
-    Route::middleware('auth')->group(function () {
-    Route::get('/password/change', [ProfileController::class, 'showChangePasswordForm'])
-    ->name('password.change');
-    
-Route::post('/password/change', [ProfileController::class, 'changePassword'])
-    ->name('password.update');
-
-
-    Route::get('/password/change', [ProfileController::class, 'showChangePasswordForm'])
-     ->name('password.change');
-});});
+Route::resource('photographers', PhotographersController::class);
