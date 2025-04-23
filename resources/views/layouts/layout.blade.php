@@ -12,7 +12,7 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -36,9 +36,9 @@
   <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
 </head>
 
-<body class="g-sidenav-show  bg-gray-100"> --}}
+<body class="g-sidenav-show  bg-gray-100">
 
-  @include('')
+ 
 
   @include('layouts.sidebar');
 
