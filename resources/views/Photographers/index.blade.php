@@ -253,7 +253,6 @@
         </tbody>
     </table>
 </div>
-@yield('content')
 
 @include('layouts.footar');
 
