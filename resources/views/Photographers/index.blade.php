@@ -22,23 +22,21 @@
 
 @include('layouts.navpar');
 
-
-
 @include('layouts.sidebar');
 
 @section('content')
 
-
-
-
- 
-
-
-
-
 <style>
     body {
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+.photographers-container{
+    margin-left: 270px !important;
+}
+footer{
+    margin-left: 250px !important;
+    margin-top: 160px !important;
+ 
 }
     :root {
         --primary-color: #4a90e2;
