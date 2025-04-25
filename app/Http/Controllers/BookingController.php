@@ -11,11 +11,15 @@ class BookingController extends Controller
     public function create()
     {
         $user = Auth::user();
-        
         return view('book now', compact('user'));
     }
-            public function store(Request $request)
+
+    public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Please log in to make a booking.');
+        }
+
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -25,7 +29,9 @@ class BookingController extends Controller
             'time' => 'required',
         ]);
 
+        // تخزين الحجز
         Booking::create([
+            'user_id' => Auth::id(),  
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -36,4 +42,10 @@ class BookingController extends Controller
 
         return redirect()->back()->with('success', 'Booking successful!');
     }
-}
+
+    
+    public function index()
+    {
+        $bookings =Booking::all();
+        return view('index', compact('bookings'));
+    }}
