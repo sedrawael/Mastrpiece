@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\PhotographerS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,9 +12,9 @@ class BookingController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('book now', compact('user'));
+        $photographers = PhotographerS::where('is_available', true)->get();
+        return view('book now', compact('user', 'photographers'));
     }
-
     public function store(Request $request)
     {
         if (!Auth::check()) {
@@ -29,9 +30,9 @@ class BookingController extends Controller
             'time' => 'required',
         ]);
 
-        // تخزين الحجز
         Booking::create([
-            'user_id' => Auth::id(),  
+            'user_id' => Auth::id(),
+            'photographer_id' => $request->photographer_id,
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -39,8 +40,8 @@ class BookingController extends Controller
             'date' => $request->date,
             'time' => $request->time,
         ]);
-
-        return redirect()->back()->with('success', 'Booking successful!');
+        
+        return view('home')->with('success', 'Booking successful!');
     }
 
     

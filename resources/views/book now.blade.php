@@ -8,18 +8,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         body::before {
             background: rgba(0, 0, 0, 0.6);
         }
-        
+
         .booking-form {
             transform: translateY(-30px);
+            max-width: 900px; 
+            margin: 0 auto;   
+            padding: 40px;    
         }
-        
+
         .form-group input:focus {
             background: #fff8e5;
         }
+        .btn-select-photographer {
+          display: inline-block;
+          background-color: #f3c024;
+          color: #fff;
+          padding: 12px 24px;
+          font-size: 16px;
+          font-weight: bold;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin-top: 20px;
+        }
+
+        .btn-select-photographer:hover {
+          background-color: #E89F10;
+        }
+
     </style>
 </head>
 <body>
@@ -35,48 +59,123 @@
 
     <div class="container">
         <form class="booking-form" method="POST" action="{{ route('booking.store') }}">
-            @csrf
-            <h2>Book Now</h2>
-            <p class="aaa">Fill out the form below to book your appointment with us.</p>
-
-            <div class="form-group">
+          @csrf
+          <h2>Book Now</h2>
+          <p class="aaa">Fill out the form and book your appointment with us</p>
+      
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" value="{{ $user->name ?? '' }}" required>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" value="{{ $user->name ?? '' }}" required>
+              </div>
             </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ $user->email ?? '' }}" required>
+      
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" value="{{ $user->email ?? '' }}" required>
+              </div>
             </div>
-
-            <div class="form-group">
+      
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" value="{{ $user->phone ?? '' }}" required>
+              </div>
             </div>
-
-            <div class="form-group">
+      
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="event_type">Event Type</label>
                 <select id="event_type" name="event_type" required>
-                    <option value="" disabled selected>Select event type</option>
-                    <option value="wedding">Wedding</option>
-                    <option value="birthday">Birthday</option>
-                    <option value="corporate">Corporate Event</option>
+                  <option value="" disabled selected>Select event type</option>
+                  <option value="wedding">Wedding</option>
+                  <option value="birthday">Birthday</option>
+                  <option value="corporate">Corporate Event</option>
                 </select>
+              </div>
             </div>
-
-            <div class="form-group">
+      
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="date">Date</label>
                 <input type="date" id="date" name="date" required>
+              </div>
             </div>
-
-            <div class="form-group">
+      
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="time">Time</label>
                 <input type="time" id="time" name="time" required>
+              </div>
             </div>
-
-            <button type="submit" class="btn-submit">Book Now</button>
-            
+          </div>
+      
+          <input type="hidden" id="photographer_id" name="photographer_id">
+      
+          <button type="button" class="btn-select-photographer" data-bs-toggle="modal" data-bs-target="#photographerModal">
+            Select Photographer
+          </button>
         </form>
+      </div>
+      
+
+    <!-- Modal -->
+<div class="modal fade" id="photographerModal" tabindex="-1" aria-labelledby="photographerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="padding: 20px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="photographerModalLabel">Choose Your Photographer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="row">
+            @foreach($photographers as $photographer)
+            <div class="col-md-4 mb-4">
+              <div class="card photographer-card" style="cursor: pointer;" onclick="selectPhotographer({{ $photographer->id }}, '{{ $photographer->name }}')">
+                <img src="{{ asset('storage/' . $photographer->profile_image) }}" class="card-img-top" alt="{{ $photographer->name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ $photographer->name }}</h5>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function selectPhotographer(id, name) {
+    document.getElementById('photographer_id').value = id;
+
+    var photographerModal = bootstrap.Modal.getInstance(document.getElementById('photographerModal'));
+    photographerModal.hide(); 
+
+    Swal.fire({
+        title: 'Confirm Booking',
+        text: "You selected photographer: " + name + ". Do you want to confirm the booking?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, book now!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector('.booking-form').submit();
+        } else {
+            document.getElementById('photographer_id').value = '';
+        }
+    });
+}
+</script>
+    
 </html>
