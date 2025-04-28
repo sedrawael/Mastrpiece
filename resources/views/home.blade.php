@@ -1,9 +1,69 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('headd')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="tt.css">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 </head>
-@include('nav')
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url('/') }}" class="navbar-logo">
+                <img src="{{ asset('images/9dfe2123-53e7-4310-a838-eb94ba255eb7-removebg-preview.png') }}" alt="Snap Aqaba Logo" width="150">
+            </a>
+       
+            <div class="navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#team">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+                <div class="auth-links">
+                    @guest
+                        <a href="{{ route('login') }}" class="nav-link" aria-label="Login">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="{{ route('register') }}" class="nav-link" aria-label="Register">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    @else
+                        <a href="{{ route('profile.show') }}" class="nav-link" aria-label="Profile">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                        <a href="{{ route('logout') }}" class="nav-link" aria-label="Logout"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endguest
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
@@ -28,7 +88,6 @@
                         <li><strong>High-Quality Results</strong></li>
                         <li><strong>Easy Booking Process</strong></li>
                     </ul>
-                    <a href="about.html" class="btn-book">اعرف المزيد</a>
                 </div>
                 <div class="about-image">
 <img src="{{ asset('images/11089c9c-e693-4a21-9499-a47fa19f5b40 (1).jpg') }}" alt="About Us">

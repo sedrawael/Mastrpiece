@@ -63,6 +63,4 @@ Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.ind
     Route::middleware(['auth'])->group(function () {
         Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     });
-    Route::resource('bookings', BookingController::class);
-    Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 });
