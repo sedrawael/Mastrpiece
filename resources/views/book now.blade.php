@@ -1,5 +1,5 @@
-@include('nav')
-@include('headd')
+{{-- @include('nav')
+@include('headd') --}}
 
 <!DOCTYPE html>
 <html lang="en">
