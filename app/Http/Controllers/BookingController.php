@@ -41,7 +41,7 @@ class BookingController extends Controller
             'time' => $request->time,
         ]);
         
-        return view('home')->with('success', 'Booking successful!');
+        return redirect()->route('home')->with('success', 'Your booking has been confirmed!');
     }
 
     
@@ -49,4 +49,12 @@ class BookingController extends Controller
     {
         $bookings =Booking::all();
         return view('index', compact('bookings'));
+    }
+
+    public function destroy($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+        
+        return redirect()->back()->with('success', 'تم الحذف بنجاح');
     }}
