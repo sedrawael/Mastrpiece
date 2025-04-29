@@ -1,25 +1,22 @@
 @extends('layouts.app')
 
-        
 @include('layouts.haed')
-@include('layouts.navpar');
-
-@include('layouts.sidebar');
+@include('layouts.navpar')
+@include('layouts.sidebar')
 
 @section('content')
 
 <style>
     body {
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
-}
-.photographers-container{
-    margin-left: 270px !important;
-}
-footer{
-    margin-left: 250px !important;
-    margin-top: 160px !important;
- 
-}
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .photographers-container {
+        margin-left: 270px !important;
+    }
+    footer {
+        margin-left: 250px !important;
+        margin-top: 160px !important;
+    }
     :root {
         --primary-color: #4a90e2;
         --secondary-color: #7ed321;
@@ -29,7 +26,6 @@ footer{
         --bg-light: #f8f9fa;
         --border-color: #e0e0e0;
     }
-
     .photographers-container {
         max-width: 1200px;
         margin: 2rem auto;
@@ -38,7 +34,6 @@ footer{
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
     .header-section {
         display: flex;
         justify-content: space-between;
@@ -47,13 +42,11 @@ footer{
         padding-bottom: 1rem;
         border-bottom: 2px solid var(--primary-color);
     }
-
     .photographers-table {
         width: 100%;
         border-collapse: collapse;
         margin: 1.5rem 0;
     }
-
     .photographers-table thead th {
         background: var(--bg-light);
         color: var(--text-dark);
@@ -61,13 +54,11 @@ footer{
         text-align: left;
         border-bottom: 2px solid var(--border-color);
     }
-
     .photographers-table tbody td {
         padding: 1rem;
         border-bottom: 1px solid var(--border-color);
         vertical-align: middle;
     }
-
     .profile-image {
         width: 50px;
         height: 50px;
@@ -75,54 +66,50 @@ footer{
         object-fit: cover;
         border: 2px solid var(--primary-color);
     }
-
     .status-badge {
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         font-size: 0.85rem;
         font-weight: 500;
     }
-
     .available {
         background: rgba(126, 211, 33, 0.1);
         color: var(--secondary-color);
     }
-
     .not-available {
         background: rgba(255, 71, 87, 0.1);
         color: var(--danger-color);
     }
-
     .action-buttons {
         display: flex;
         gap: 0.5rem;
     }
 
+    /* ✅ تعديل الأزرار */
     .btn-custom {
-        padding: 0.5rem 1rem;
+        width: 40px;
+        height: 40px;
+        padding: 0;
         border: none;
         border-radius: 6px;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        justify-content: center;
+        font-size: 16px;
     }
-
     .btn-view {
         background: rgba(74, 144, 226, 0.1);
         color: var(--primary-color);
     }
-
     .btn-edit {
         background: rgba(255, 193, 7, 0.1);
         color: #ffc107;
     }
-
     .btn-delete {
         background: rgba(255, 71, 87, 0.1);
         color: var(--danger-color);
     }
-
     .btn-custom:hover {
         transform: translateY(-2px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -136,30 +123,25 @@ footer{
         align-items: center;
         gap: 0.75rem;
     }
-
     @media (max-width: 768px) {
         .photographers-container {
             margin: 1rem;
             padding: 1rem;
         }
-        
         .photographers-table thead {
             display: none;
         }
-        
         .photographers-table tbody td {
             display: block;
             text-align: right;
             padding: 0.75rem;
         }
-        
         .photographers-table tbody td::before {
             content: attr(data-label);
             float: left;
             font-weight: 600;
             color: var(--text-medium);
         }
-        
         .action-buttons {
             justify-content: flex-end;
         }
@@ -195,7 +177,7 @@ footer{
             @foreach($photographers as $photographer)
                 <tr>
                     <td data-label="Image">
-                        <img src="{{ asset('storage/' . $photographer->profile_image) }}" 
+                        <img src="{{ asset('storage/' . $photographer->profile_image) }}"
                              class="profile-image"
                              alt="{{ $photographer->name }}">
                     </td>
@@ -209,18 +191,18 @@ footer{
                     </td>
                     <td data-label="Actions">
                         <div class="action-buttons">
-                            <a href="{{ route('photographers.show', $photographer->id) }}" 
+                            <a href="{{ route('photographers.show', $photographer->id) }}"
                                class="btn-custom btn-view">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('photographers.edit', $photographer->id) }}" 
+                            <a href="{{ route('photographers.edit', $photographer->id) }}"
                                class="btn-custom btn-edit">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('photographers.destroy', $photographer->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" 
+                                <button type="submit"
                                         class="btn-custom btn-delete"
                                         onclick="return confirm('Are you sure you want to delete?')">
                                     <i class="fas fa-trash"></i>
@@ -234,7 +216,6 @@ footer{
     </table>
 </div>
 
-@include('layouts.footar');
-
+@include('layouts.footar')
 
 @endsection

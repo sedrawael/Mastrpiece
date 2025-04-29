@@ -41,6 +41,14 @@
 <style>
     /* Footer Styles */
 .footer {
+    position: absolute;
+ 
+  
+  
+    width: 100%;
+ 
+  padding: 10px 0;
+  z-index: 10;
     background-color: #333;
     color: #fff;
     padding: 60px 0 20px;
@@ -48,7 +56,7 @@
 }
 
 .footer__container {
-    max-width: 1200px;
+    max-width: 1200px;  max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }

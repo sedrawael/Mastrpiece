@@ -33,7 +33,7 @@
                         <a class="nav-link" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#team">Team</a>
+                        <a class="nav-link" href="#Team">Team</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact Us</a>
@@ -190,9 +190,9 @@
         </div>
     </section>
 
- 
+ @include('contact') 
 <!-- Contact Section -->
-<section id="contact" class="contact-section">
+{{-- <section id="contact" class="contact-section">
     <div class="container">
         <h2>Get in Touch</h2>
         <p>We’d love to hear from you!</p>
@@ -223,7 +223,7 @@
             </form>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- Font Awesome Icons -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 

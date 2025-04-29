@@ -195,25 +195,25 @@
 
 
             <li class="nav-item">
-              <a href="/about" class="nav-link">About</a>
+              <a href="home#about" class="nav-link">About</a>
           </li>
-           
-            <li class="nav-item">
-                <a href="/services" class="nav-link">
+
+
+              <li class="nav-item">
+                <a href="home#services" class="nav-link">
                     <i class="nav-link"></i>Services
                 </a>
             </li>
 
-
             <li class="nav-item">
-                <a href="/team" class="nav-link">
+                <a href="home#Team" class="nav-link">
                     <i class="nav-link"></i>Team
                 </a>
             </li>
 
 
             <li class="nav-item">
-                <a href="/contact" class="nav-link">
+                <a href="home#contact" class="nav-link">
                     <i class="nav-link"></i>Contact
                 </a>
             </li>
@@ -348,62 +348,96 @@
       </div>
       
 
-    <!-- Modal -->
-<div class="modal fade" id="photographerModal" tabindex="-1" aria-labelledby="photographerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content" style="padding: 20px;">
-        <div class="modal-header">
-          <h5 class="modal-title" id="photographerModalLabel">Choose Your Photographer</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        
-        <div class="modal-body">
-          <div class="row">
-            @foreach($photographers as $photographer)
-            <div class="col-md-4 mb-4">
-              <div class="card photographer-card" style="cursor: pointer;" onclick="selectPhotographer({{ $photographer->id }}, '{{ $photographer->name }}')">
-                <img src="{{ asset('storage/' . $photographer->profile_image) }}" class="card-img-top" alt="{{ $photographer->name }}" style="height: 200px; object-fit: cover;">
-                <div class="card-body text-center">
-                  <h5 class="card-title">{{ $photographer->name }}</h5>
-                </div>
+    <!-- Photographer Selection Modal -->
+    <div class="modal fade" id="photographerModal" tabindex="-1" aria-labelledby="photographerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content" style="padding: 20px;">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="photographerModalLabel">Choose Your Photographer</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-            </div>
-            @endforeach
+
+              <div class="modal-body">
+                  <div class="row">
+                      @foreach($photographers as $photographer)
+                      <div class="col-md-4 mb-4">
+                          <div class="card photographer-card" 
+                              style="cursor: pointer;" 
+                              onclick="selectPhotographer(
+                                  {{ $photographer->id }},
+                                  `{{ $photographer->name }}`,
+                                  `{{ $photographer->specialty }}`,
+                                  {{ $photographer->price_per_hour }}
+                              )">
+                              <img src="{{ asset('storage/' . $photographer->profile_image) }}" 
+                                  class="card-img-top" 
+                                  alt="{{ $photographer->name }}" 
+                                  style="height: 200px; object-fit: cover;">
+                              <div class="card-body text-center">
+                                  <h5 class="card-title">{{ $photographer->name }}</h5>
+                                  <p class="text-muted mb-0">{{ $photographer->specialty }}</p>
+                                  <p class="text-success">${{ number_format($photographer->price_per_hour, 2) }}/hour</p>
+                              </div>
+                          </div>
+                      </div>
+                      @endforeach
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+  function selectPhotographer(id, name, specialty, price) {
+      document.getElementById('photographer_id').value = id;
+
+      const photographerModal = bootstrap.Modal.getInstance(document.getElementById('photographerModal'));
+      photographerModal.hide();
+
+      Swal.fire({
+          title: `Booking Confirmation`,
+          html: `
+              <div style="text-align: left; padding: 15px;">
+                  <div style="margin-bottom: 20px; border-bottom: 2px solid #f3c024; padding-bottom: 15px;">
+                      <h3 style="color: #2c3e50; margin-bottom: 10px;">${name}</h3>
+                      <div style="display: grid; grid-template-columns: max-content 1fr; gap: 10px; align-items: center;">
+                          <span style="font-weight: 600; color: #34495e;">Specialty:</span>
+                          <span>${specialty}</span>
+                          
+                          <span style="font-weight: 600; color: #34495e;">Rate:</span>
+                          <span style="color: #27ae60; font-weight: bold;">$${price.toFixed(2)}/hour</span>
+                      </div>
+                  </div>
+                  <p style="color: #e74c3c; font-size: 18px; font-weight: 600; text-align: center;">
+                      Confirm your booking with this photographer?
+                  </p>
+              </div>
+          `,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#28a745',
+          cancelButtonColor: '#dc3545',
+          confirmButtonText: 'Confirm Booking',
+          cancelButtonText: 'Cancel',
+          customClass: {
+              popup: 'custom-swal',
+              title: 'swal-title',
+              htmlContainer: 'swal-html-container'
+          },
+          showClass: {
+              popup: 'swal2-show-animation'
+          }
+      }).then((result) => {
+          if (result.isConfirmed) {
+              document.querySelector('.booking-form').submit();
+          } else {
+              document.getElementById('photographer_id').value = '';
+          }
+      });
+  }
+  </script>
   @include('footer')
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-function selectPhotographer(id, name) {
-    document.getElementById('photographer_id').value = id;
-
-    var photographerModal = bootstrap.Modal.getInstance(document.getElementById('photographerModal'));
-    photographerModal.hide(); 
-
-    Swal.fire({
-        title: 'Confirm Booking',
-        text: "You selected photographer: " + name + ". Do you want to confirm the booking?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, book now!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.querySelector('.booking-form').submit();
-        } else {
-            document.getElementById('photographer_id').value = '';
-        }
-    });
-}
-
-</script>
-    
-</html>

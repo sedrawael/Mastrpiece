@@ -2,7 +2,7 @@
     
 
     use App\Http\Controllers\ContentController;
-
+    use App\Http\Controllers\MessageController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
@@ -55,12 +55,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking', [BookingController::class, 'create'])->name('booking.create');
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 
-    // ✅ تصحيح
+
 Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     
     Route::get('/index', [ContentController::class, 'index'])->middleware('auth')->name('index');
 
     Route::middleware(['auth'])->group(function () {
+       
         Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     });
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
+    
+    Route::post('/contact/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::get('/contact/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('/contact/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+Route::delete('/contact/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+Route::resource('contact', MessageController::class);
+ Route::currentRouteName() == 'route.name' ? 'active bg-gradient-primary text-white' : 'text-dark' ;
+
 });

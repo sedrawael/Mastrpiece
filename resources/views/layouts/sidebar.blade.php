@@ -27,22 +27,29 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="{{ route('photographers.index') }}">
-              <i class="material-symbols-rounded opacity-5">table_view</i>
+              <i class="material-symbols-rounded opacity-5">photo_camera</i> <!-- الأفضل -->
               <span class="nav-link-text ms-1">Photographers</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="{{ route('bookings.index') }}">
-            <i class="material-symbols-rounded opacity-5">table_view</i>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('bookings.index') }}">
+            <i class="material-symbols-rounded opacity-5">event_available</i> <!-- الأفضل -->
             <span class="nav-link-text ms-1">Bookings</span>
         </a>
-                </li>
+    </li>
+
         <li class="nav-item">
           <a class="nav-link text-dark" href="../pages/virtual-reality.html">
             <i class="material-symbols-rounded opacity-5">view_in_ar</i>
             <span class="nav-link-text ms-1">Virtual Reality</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{{ route('messages.index') }}">
+              <i class="material-symbols-rounded opacity-5">message</i> <!-- الأيقونة الجديدة -->
+              <span class="nav-link-text ms-1">Messages</span>
+          </a>
+      </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="../pages/rtl.html">
             <i class="material-symbols-rounded opacity-5">format_textdirection_r_to_l</i>
