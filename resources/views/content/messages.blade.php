@@ -5,12 +5,10 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow-lg">
-                {{-- عنوان الصفحة --}}
                 <div class="card-header bg-primary text-white" >
-                    <h3 class="mb-0"><i class="fas fa-inbox me-2"></i>Inbox Messages</h3>
+                    <h3 style="color: white" class="mb-0"><i class="fas fa-inbox me-2"></i>Inbox Messages</h3>
                 </div>
 
-                {{-- محتوى الرسائل --}}
                 <div class="card-body p-0">
                     @if($messages->count())
                     <div class="table-responsive">
