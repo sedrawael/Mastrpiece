@@ -7,6 +7,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotographersController;
 use App\Http\Controllers\BookingController;
+use App\Models\Booking;
+use App\Models\PhotographerS;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
@@ -22,9 +26,42 @@ Auth::routes();
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
+
+
+
+
+
+
+
 Route::get('/content', function () {
-    return view('content');
-})->middleware('auth')->name('content'); 
+    // Get today's bookings
+    $bookingsToday = Booking::whereDate('created_at', Carbon::today())->count();
+
+    // Get total users
+    $totalUsers = User::count();
+
+    // Bookings chart (last 7 days)
+    $bookingsChart = Booking::selectRaw('DATE(created_at) as day, COUNT(*) as total')
+        ->where('created_at', '>=', Carbon::now()->subDays(6))
+        ->groupBy('day')
+        ->orderBy('day')
+        ->get();
+
+    // New photographers chart (last 7 days)
+    $photographersChart = PhotographerS::selectRaw('DATE(created_at) as day, COUNT(*) as total')
+        ->where('created_at', '>=', Carbon::now()->subDays(6))
+        ->groupBy('day')
+        ->orderBy('day')
+        ->get();
+
+    return view('content', compact('bookingsToday', 'totalUsers', 'bookingsChart', 'photographersChart'));
+})->middleware('auth')->name('content');
+
+
+
+
+
+
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -69,11 +106,11 @@ Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.ind
     Route::post('/contact/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::get('/contact/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
-Route::get('/contact/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
-Route::delete('/contact/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
-Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
-Route::resource('contact', MessageController::class);
- Route::currentRouteName() == 'route.name' ? 'active bg-gradient-primary text-white' : 'text-dark' ;
+    Route::get('/contact/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+    Route::delete('/contact/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+    Route::resource('contact', MessageController::class);
+    Route::currentRouteName() == 'route.name' ? 'active bg-gradient-primary text-white' : 'text-dark' ;
 
 
 });
