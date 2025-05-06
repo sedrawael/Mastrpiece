@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 <link rel="stylesheet" href="tt.css">
+<meta charset="UTF-8">
 </head>
 <body>
 
@@ -133,11 +134,10 @@
         </div>
     </section>
 
-    <!-- Team Section -->
     <section class="team-section" id="Team">
         <div class="container">
-            <h2 style="text-align: center;">Our Photographers</h2>
-            <p style="text-align: center; margin-bottom: 40px;">
+            <h2 class="text-center">Our Photographers</h2>
+            <p class="text-center mb-4">
                 Meet our talented photographers based in Aqaba, ready to capture your special moments.
             </p>
             <div class="team-members">
@@ -146,40 +146,87 @@
                         <img src="{{ asset('storage/' . $photographer->profile_image) }}" alt="{{ $photographer->name }}">
                         <h3>{{ $photographer->name }}</h3>
                         <p>{{ $photographer->specialty }}</p>
-                        {{-- <p>{{ $photographer->phone }}</p> --}}
-    
-                        <button style="background-color: #f3c024; border: none; margin-bottom: 13px;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#photographerModal{{ $photographer->id }}">
+                        <button class="btn btn-primary view-details-btn" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#photographerModal"
+                                data-photographer='@json($photographer)'>
                             View Details
                         </button>
                     </div>
-    
-                    <!-- Modal -->
-                    <div class="modal fade" id="photographerModal{{ $photographer->id }}" tabindex="-1" aria-labelledby="photographerModalLabel{{ $photographer->id }}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="photographerModalLabel{{ $photographer->id }}">{{ $photographer->name }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img src="{{ asset('storage/' . $photographer->profile_image) }}" style="width: 200px; height: 200px; object-fit: cover;" class="rounded-circle mb-3" alt="{{ $photographer->name }}">
-                                    <p><strong>Specialty:</strong> {{ $photographer->specialty }}</p>
-                                    <p><strong>Phone:</strong> {{ $photographer->phone }}</p>
-                                    <p><strong>Email:</strong> {{ $photographer->email }}</p>
-                                    <p><strong>Price per Hour:</strong> ${{ $photographer->price_per_hour }}</p>
-                                    <p><strong>Available:</strong> {{ $photographer->is_available ? 'Yes' : 'No' }}</p>
-                                    <p><strong>Bio:</strong> {{ $photographer->bio }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Modal -->
                 @endforeach
             </div>
         </div>
     </section>
-            
- @include('contact') 
+    
+    <!-- Single Modal for All Photographers -->
+    <div class="modal fade" id="photographerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-primary text-white">
+                    <h5 class="modal-title" id="photographerModalLabel"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalProfileImage" src="" class="rounded-circle mb-3 profile-img-modal" alt="">
+                    <div class="photographer-details"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* تأمين ظهور المودال فوق كل العناصر */
+        .modal {
+            z-index: 99999 !important;
+        }
+        .modal-backdrop {
+            z-index: 99998 !important;
+        }
+        .profile-img-modal {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 3px solid #f3c024;
+        }
+        .view-details-btn {
+            background-color: #f3c024;
+            border: none;
+            margin-bottom: 13px;
+        }
+    </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // معالجة فتح المودال
+        document.querySelectorAll('.view-details-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const photographer = JSON.parse(this.getAttribute('data-photographer'));
+                
+                // تعبئة بيانات المودال
+                document.getElementById('photographerModalLabel').textContent = photographer.name;
+                document.getElementById('modalProfileImage').src = "{{ asset('storage/') }}/" + photographer.profile_image;
+                document.getElementById('modalProfileImage').alt = photographer.name;
+                
+                let detailsHTML = `
+                    <p><strong>Specialty:</strong> ${photographer.specialty}</p>
+                    <p><strong>Phone:</strong> ${photographer.phone}</p>
+                    <p><strong>Email:</strong> ${photographer.email}</p>
+                    <p><strong>Price per Hour:</strong> $${photographer.price_per_hour}</p>
+                    <p><strong>Available:</strong> ${photographer.is_available ? 'Yes' : 'No'}</p>
+                    <p><strong>Bio:</strong> ${photographer.bio}</p>
+                `;
+                
+                document.querySelector('.photographer-details').innerHTML = detailsHTML;
+            });
+        });
+    
+        // تنظيف المودال عند الإغلاق
+        document.getElementById('photographerModal').addEventListener('hidden.bs.modal', function () {
+            document.querySelector('.photographer-details').innerHTML = '';
+        });
+    });
+    </script>
+     @include('contact') 
 <!-- Contact Section -->
 {{-- <section id="contact" class="contact-section">
     <div class="container">
@@ -257,6 +304,6 @@
 <!-- Font Awesome Icons -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
+    </script>
+    </body>
 </html>

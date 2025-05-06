@@ -44,12 +44,13 @@
               <span class="nav-link-text ms-1">Messages</span>
           </a>
       </li>
-        {{-- <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/notifications.html">
-            <i class="material-symbols-rounded opacity-5">notifications</i>
-            <span class="nav-link-text ms-1">Notifications</span>
-          </a>
-        </li> --}}
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('admin.profile') }}">
+          <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
+          <span class="nav-link-text ms-1">Admin Profile</span>
+        </a>
+      </li>
+      
       </ul>
     </div>
   </aside>

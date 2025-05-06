@@ -1,14 +1,12 @@
 <?php
-    
-
-    use App\Http\Controllers\ContentController;
-    use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\MessageController;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PhotographersController;
 use App\Http\Controllers\BookingController;
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
@@ -77,4 +75,18 @@ Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bo
 Route::resource('contact', MessageController::class);
  Route::currentRouteName() == 'route.name' ? 'active bg-gradient-primary text-white' : 'text-dark' ;
 
+
 });
+
+
+
+
+
+
+
+
+Route::get('/admin/profile', [AdminProfileController::class, 'profile'])->name('admin.profile');
+Route::get('/admin/profile/edit', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+Route::post('/admin/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+
+

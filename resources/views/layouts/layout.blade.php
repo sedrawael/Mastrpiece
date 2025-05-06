@@ -201,6 +201,28 @@
     if (navigator.platform.indexOf('Win') > -1 && document.querySelector('#sidenav-scrollbar')) {
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), { damping: '0.5' });
     }
+
+    // Fetch and update bookings per month chart
+    fetch('/bookings-per-month')
+      .then(response => response.json())
+      .then(data => {
+        const labels = data.map(item => item.month_name);
+        const values = data.map(item => item.total);
+        barChart.data.labels = labels;
+        barChart.data.datasets[0].data = values;
+        barChart.update();
+      });
+
+    // Fetch and update photographers per month chart
+    fetch('/photographers-per-month')
+      .then(response => response.json())
+      .then(data => {
+        const labels = data.map(item => item.month_name);
+        const values = data.map(item => item.total);
+        lineChart.data.labels = labels;
+        lineChart.data.datasets[0].data = values;
+        lineChart.update();
+      });
   </script>
 
   <!-- Github buttons -->
@@ -208,6 +230,7 @@
 
   <!-- Material Dashboard Control Center -->
   <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+  
 </body>
 
 </html>
