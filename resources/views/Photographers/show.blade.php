@@ -1,6 +1,9 @@
-@extends('layouts.app')
+@extends("layouts.layout")
+
+@include('layouts.haed')
 
 @section('content')
+
 <style>
     :root {
         --primary-color: #4a90e2;

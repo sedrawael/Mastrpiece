@@ -10,9 +10,7 @@
          font-family: 'Arial', sans-serif;
      }
 
-     body {
-         padding-top: 80px; /* نفس ارتفاع النافبار */
-     }
+    
 
      /* ============= Navbar Styles ============= */
      .navbar {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,4 +69,39 @@ class UserController extends Controller
         
         return back()->with('success', 'تم حذف الصورة الشخصية بنجاح');
     }
+    public function usersList()
+{
+    $users = User::all();
+    return view('dashboard.users', compact('users'));
+}
+public function deleteUser($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return redirect()->route('dashboard.users')->with('success', 'تم حذف المستخدم بنجاح!');
+}
+public function editUser($id)
+{
+    $user = User::findOrFail($id);
+    return view('dashboard.editUser', compact('user'));
+}
+public function updateUser(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'firstname' => 'required|string|max:255',
+        'lastname' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $id,
+    ]);
+    
+    $user->firstname = $request->firstname;
+    $user->lastname = $request->lastname;
+        $user->email = $request->email;
+    $user->save();
+
+    return redirect()->route('dashboard.users')->with('success', 'تم تعديل المستخدم بنجاح!');
+}
+
 }

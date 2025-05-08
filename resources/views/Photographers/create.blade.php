@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@include('layouts.haed')
+@extends("layouts.layout")
 
 @section('content')
 <style>
@@ -130,5 +130,6 @@
         
         <button type="submit" class="btn-dashboard-primary">Add Photographer</button>
     </form>
+
 </div>
 @endsection

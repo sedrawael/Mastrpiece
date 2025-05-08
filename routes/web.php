@@ -127,3 +127,11 @@ Route::get('/admin/profile/edit', [AdminProfileController::class, 'edit'])->name
 Route::post('/admin/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');
 
 
+
+
+
+
+Route::get('/dashboard/users', [UserController::class, 'usersList'])->name('dashboard.users');
+Route::delete('/dashboard/users/{id}', [UserController::class, 'deleteUser'])->name('dashboard.users.delete');
+Route::get('/dashboard/users/{id}/edit', [UserController::class, 'editUser'])->name('dashboard.users.edit');
+Route::put('/dashboard/users/{id}', [UserController::class, 'updateUser'])->name('dashboard.users.update');

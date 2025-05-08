@@ -51,6 +51,14 @@
         </a>
       </li>
       
+    
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="{{ route('dashboard.users') }}">
+          <i class="material-symbols-rounded opacity-5">group</i>
+          <span class="nav-link-text ms-1">Users</span>
+        </a>
+      </li>
+
       </ul>
     </div>
   </aside>

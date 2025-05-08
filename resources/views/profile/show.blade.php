@@ -192,9 +192,8 @@
      }
 
      .navbar-logo img {
-         height: 60px;
-         transition: transform 0.3s ease;
-     }
+        height:60px;
+        width: 100px;     }
 
      .navbar-logo:hover img {
          transform: scale(1.05);

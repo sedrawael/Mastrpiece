@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@include('layouts.haed')
+
+@extends("layouts.layout")
 @section('content')
 <style>
     .container {
@@ -167,4 +167,5 @@
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
+
 @endsection

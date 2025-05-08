@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Notifications\NewBookingNotification;
+use App\Models\User;
 
 use App\Models\Booking;
 use App\Models\PhotographerS;
@@ -20,7 +22,7 @@ class BookingController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Please log in to make a booking.');
         }
-
+    
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -29,8 +31,8 @@ class BookingController extends Controller
             'date' => 'required|date',
             'time' => 'required',
         ]);
-
-        Booking::create([
+    
+        $booking = Booking::create([
             'user_id' => Auth::id(),
             'photographer_id' => $request->photographer_id,
             'name' => $request->name,
@@ -40,11 +42,13 @@ class BookingController extends Controller
             'date' => $request->date,
             'time' => $request->time,
         ]);
-        
+    
+        $user = User::find($booking->user_id);
+        $user->notify(new NewBookingNotification($booking));
+    
         return redirect()->route('home')->with('success', 'Your booking has been confirmed!');
     }
-
-    
+        
     public function index()
     {
         $bookings =Booking::all();

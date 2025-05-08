@@ -6,10 +6,7 @@
      }
 
      body {
-        margin: 0;
-         padding: 0;
-         box-sizing: border-box;
-         font-family: 'Arial', sans-serif;
+     
 
          
      }
@@ -42,8 +39,8 @@
      }
 
      .navbar-logo img {
-         height: 60px;
-         transition: transform 0.3s ease;
+        height:60px;
+            width: 100px;
      }
 
      .navbar-logo:hover img {

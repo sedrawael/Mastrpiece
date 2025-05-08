@@ -21,7 +21,7 @@ class Booking extends Model
     // الإضافات الجديدة
     protected $casts = [
         'date' => 'date',
-        'time' => 'datetime:H:i'
+        
     ];
 
     public function getFullEventAttribute()

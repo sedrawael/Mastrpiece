@@ -55,7 +55,8 @@
         }
 
         .navbar-logo img {
-            height: 60px;
+            height:60px;
+            width: 100px;
             transition: transform 0.3s ease;
         }
 
