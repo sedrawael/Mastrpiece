@@ -55,7 +55,7 @@ Route::get('/content', function () {
         ->get();
 
     return view('content', compact('bookingsToday', 'totalUsers', 'bookingsChart', 'photographersChart'));
-})->middleware('auth')->name('content');
+})->middleware(['auth', 'admin'])->name('content');
 
 
 
